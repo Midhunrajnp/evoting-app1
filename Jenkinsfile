@@ -1,10 +1,14 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'Maven'
+    }
+
     stages {
         stage('Clone') {
             steps {
-                git 'https://github.com/Midhunrajnp/evoting-app1.git'
+                git branch: 'main', url: 'https://github.com/Midhunrajnp/evoting-app1.git'
             }
         }
 
