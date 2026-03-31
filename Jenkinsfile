@@ -5,7 +5,7 @@ pipeline {
 
         stage('Clone') {
             steps {
-                git 'https://github.com/Midhunrajnp/evoting-app1.git'
+                git branch: 'main', url: 'https://github.com/Midhunrajnp/evoting-app1.git'
             }
         }
 
@@ -18,12 +18,6 @@ pipeline {
         stage('Test') {
             steps {
                 bat 'mvnw test'
-            }
-        }
-
-        stage('Run App') {
-            steps {
-                bat 'mvnw spring-boot:run'
             }
         }
     }
