@@ -20,5 +20,11 @@ pipeline {
                 bat 'mvnw test'
             }
         }
+
+        stage('Docker Build') {
+            steps {
+                bat 'docker build -t evoting-app .'
+            }
+        }
     }
 }
