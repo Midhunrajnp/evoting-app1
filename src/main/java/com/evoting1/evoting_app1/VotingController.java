@@ -5,7 +5,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/vote")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*") // VERY IMPORTANT for frontend
 public class VotingController {
 
     private Map<String, Candidate> candidates = new HashMap<>();
@@ -35,12 +35,11 @@ public class VotingController {
         return candidates.values();
     }
 
-    // ✅ Reset votes properly
     @PostMapping("/reset")
     public String resetVotes() {
-        candidates.clear();
-        candidates.put("A", new Candidate("Candidate A"));
-        candidates.put("B", new Candidate("Candidate B"));
-        return "Votes reset successfully!";
+        for (Candidate c : candidates.values()) {
+            c.reset();
+        }
+        return "Votes reset successfully";
     }
 }

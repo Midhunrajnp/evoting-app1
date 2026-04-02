@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>E-Voting System</title>
+</head>
+<body style="text-align:center; font-family: Arial;">
+
+<h1>E-Voting System</h1>
+
+<h3>Vote for your candidate</h3>
+
+<button onclick="vote('A')">Vote Candidate A</button>
+<button onclick="vote('B')">Vote Candidate B</button>
+
+<br><br>
+
+<button onclick="showResults()">Show Results</button>
+<button onclick="resetVotes()">Reset Votes</button>
+
+<h2 id="result" style="display:none;"></h2>
+
+<script>
+const BASE_URL = "http://localhost:8082/vote";
+
+function vote(candidate) {
+    fetch(BASE_URL + "/" + candidate, {
+        method: "POST"
+    })
+    .then(res => res.text())
+    .then(msg => {
+        alert(msg);
+    });
+}
+
+function showResults() {
+    fetch(BASE_URL + "/results")
+        .then(res => res.json())
+        .then(data => {
+            let text = "";
+            data.forEach(c => {
+                text += c.name + " : " + c.votes + " votes\n";
+            });
+
+            let resultBox = document.getElementById("result");
+            resultBox.style.display = "block"; // SHOW only now
+            resultBox.innerText = text;
+        });
+}
+
+function resetVotes() {
+    fetch(BASE_URL + "/reset", {
+        method: "POST"
+    })
+    .then(res => res.text())
+    .then(msg => {
+        alert(msg);
+        document.getElementById("result").style.display = "none"; // hide again
+    });
+}
+</script>
+
+</body>
+</html>

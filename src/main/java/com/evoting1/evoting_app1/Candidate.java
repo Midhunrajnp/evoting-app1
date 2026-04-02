@@ -1,6 +1,7 @@
 package com.evoting1.evoting_app1;
 
 public class Candidate {
+
     private String name;
     private int votes;
 
@@ -9,10 +10,19 @@ public class Candidate {
         this.votes = 0;
     }
 
-    public String getName() { return name; }
-    public int getVotes() { return votes; }
+    public String getName() {
+        return name;
+    }
+
+    public int getVotes() {
+        return votes;
+    }
 
     public void vote() {
         votes++;
+    }
+
+    public void reset() {
+        votes = 0;
     }
 }
