@@ -2,66 +2,103 @@
 <html>
 <head>
     <title>E-Voting System</title>
+
     <style>
         body {
-            font-family: Arial;
-            background: linear-gradient(to right, #667eea, #764ba2);
-            color: white;
-            text-align: center;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: url('https://images.unsplash.com/photo-1554475901-4538ddfbccc2') no-repeat center center/cover;
+            height: 100vh;
+        }
+
+        .overlay {
+            background: rgba(0,0,0,0.6);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .container {
-            margin-top: 100px;
             background: white;
-            color: black;
             padding: 30px;
             border-radius: 15px;
-            display: inline-block;
-            width: 300px;
+            text-align: center;
+            width: 320px;
+            box-shadow: 0px 0px 20px rgba(0,0,0,0.5);
+        }
+
+        h1 {
+            color: #333;
         }
 
         input {
             padding: 10px;
-            width: 80%;
+            width: 85%;
             margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid gray;
         }
 
         button {
             padding: 10px;
             margin: 5px;
-            cursor: pointer;
             border: none;
             border-radius: 5px;
+            cursor: pointer;
+            width: 80%;
         }
 
-        .voteA { background: #4CAF50; color: white; }
-        .voteB { background: #2196F3; color: white; }
-        .action { background: #333; color: white; }
+        .voteA {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .voteB {
+            background: #2196F3;
+            color: white;
+        }
+
+        .action {
+            background: #333;
+            color: white;
+        }
 
         #result {
-            margin-top: 20px;
+            margin-top: 15px;
             display: none;
+            font-weight: bold;
+        }
+
+        .logo {
+            width: 60px;
+            margin-bottom: 10px;
         }
     </style>
 </head>
 
 <body>
 
-<h1>🗳 E-Voting System</h1>
+<div class="overlay">
 
-<div class="container">
+    <div class="container">
 
-    <input type="text" id="username" placeholder="Enter your name"><br>
+        <!-- Voting Icon -->
+        <img class="logo" src="https://cdn-icons-png.flaticon.com/512/3062/3062634.png">
 
-    <button class="voteA" onclick="vote('A')">Vote Candidate A</button>
-    <button class="voteB" onclick="vote('B')">Vote Candidate B</button>
+        <h1>E-Voting</h1>
 
-    <br>
+        <input type="text" id="username" placeholder="Enter your name">
 
-    <button class="action" onclick="showResults()">Show Results</button>
-    <button class="action" onclick="resetVotes()">Reset</button>
+        <button class="voteA" onclick="vote('A')">Vote Candidate A</button>
+        <button class="voteB" onclick="vote('B')">Vote Candidate B</button>
 
-    <h3 id="result"></h3>
+        <button class="action" onclick="showResults()">Show Results</button>
+        <button class="action" onclick="resetVotes()">Reset Votes</button>
+
+        <div id="result"></div>
+
+    </div>
 
 </div>
 
@@ -72,17 +109,15 @@ function vote(candidate) {
     const user = document.getElementById("username").value;
 
     if (!user) {
-        alert("Enter your name first!");
+        alert("Enter your name!");
         return;
     }
 
-    fetch(BASE_URL + "/" + candidate, {
-        method: "POST"
-    })
-    .then(res => res.text())
-    .then(msg => {
-        alert(user + ": " + msg);
-    });
+    fetch(BASE_URL + "/" + candidate, { method: "POST" })
+        .then(res => res.text())
+        .then(msg => {
+            alert(user + ": " + msg);
+        });
 }
 
 function showResults() {
@@ -91,12 +126,12 @@ function showResults() {
         .then(data => {
             let text = "";
             data.forEach(c => {
-                text += c.name + " : " + c.votes + " votes\n";
+                text += c.name + " : " + c.votes + "<br>";
             });
 
             let resultBox = document.getElementById("result");
             resultBox.style.display = "block";
-            resultBox.innerText = text;
+            resultBox.innerHTML = text;
         });
 }
 
