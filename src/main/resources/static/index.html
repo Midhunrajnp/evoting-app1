@@ -2,33 +2,86 @@
 <html>
 <head>
     <title>E-Voting System</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: linear-gradient(to right, #667eea, #764ba2);
+            color: white;
+            text-align: center;
+        }
+
+        .container {
+            margin-top: 100px;
+            background: white;
+            color: black;
+            padding: 30px;
+            border-radius: 15px;
+            display: inline-block;
+            width: 300px;
+        }
+
+        input {
+            padding: 10px;
+            width: 80%;
+            margin-bottom: 15px;
+        }
+
+        button {
+            padding: 10px;
+            margin: 5px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .voteA { background: #4CAF50; color: white; }
+        .voteB { background: #2196F3; color: white; }
+        .action { background: #333; color: white; }
+
+        #result {
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
 </head>
-<body style="text-align:center; font-family: Arial;">
 
-<h1>E-Voting System</h1>
+<body>
 
-<h3>Vote for your candidate</h3>
+<h1>🗳 E-Voting System</h1>
 
-<button onclick="vote('A')">Vote Candidate A</button>
-<button onclick="vote('B')">Vote Candidate B</button>
+<div class="container">
 
-<br><br>
+    <input type="text" id="username" placeholder="Enter your name"><br>
 
-<button onclick="showResults()">Show Results</button>
-<button onclick="resetVotes()">Reset Votes</button>
+    <button class="voteA" onclick="vote('A')">Vote Candidate A</button>
+    <button class="voteB" onclick="vote('B')">Vote Candidate B</button>
 
-<h2 id="result" style="display:none;"></h2>
+    <br>
+
+    <button class="action" onclick="showResults()">Show Results</button>
+    <button class="action" onclick="resetVotes()">Reset</button>
+
+    <h3 id="result"></h3>
+
+</div>
 
 <script>
 const BASE_URL = "http://localhost:8082/vote";
 
 function vote(candidate) {
+    const user = document.getElementById("username").value;
+
+    if (!user) {
+        alert("Enter your name first!");
+        return;
+    }
+
     fetch(BASE_URL + "/" + candidate, {
         method: "POST"
     })
     .then(res => res.text())
     .then(msg => {
-        alert(msg);
+        alert(user + ": " + msg);
     });
 }
 
@@ -42,20 +95,18 @@ function showResults() {
             });
 
             let resultBox = document.getElementById("result");
-            resultBox.style.display = "block"; // SHOW only now
+            resultBox.style.display = "block";
             resultBox.innerText = text;
         });
 }
 
 function resetVotes() {
-    fetch(BASE_URL + "/reset", {
-        method: "POST"
-    })
-    .then(res => res.text())
-    .then(msg => {
-        alert(msg);
-        document.getElementById("result").style.display = "none"; // hide again
-    });
+    fetch(BASE_URL + "/reset", { method: "POST" })
+        .then(res => res.text())
+        .then(msg => {
+            alert(msg);
+            document.getElementById("result").style.display = "none";
+        });
 }
 </script>
 
