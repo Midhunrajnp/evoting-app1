@@ -5,7 +5,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/vote")
-@CrossOrigin(origins = "*") // VERY IMPORTANT for frontend
+@CrossOrigin(origins = "*")
 public class VotingController {
 
     private Map<String, Candidate> candidates = new HashMap<>();
@@ -13,6 +13,7 @@ public class VotingController {
     public VotingController() {
         candidates.put("A", new Candidate("Candidate A"));
         candidates.put("B", new Candidate("Candidate B"));
+        candidates.put("C", new Candidate("Candidate C")); // NEW
     }
 
     @GetMapping("/candidates")
@@ -25,7 +26,7 @@ public class VotingController {
         Candidate c = candidates.get(name);
         if (c != null) {
             c.vote();
-            return "Vote casted to " + name;
+            return "Vote recorded successfully for " + name;
         }
         return "Candidate not found";
     }

@@ -49,15 +49,9 @@
             width: 80%;
         }
 
-        .voteA {
-            background: #4CAF50;
-            color: white;
-        }
-
-        .voteB {
-            background: #2196F3;
-            color: white;
-        }
+        .voteA { background: #4CAF50; color: white; }
+        .voteB { background: #2196F3; color: white; }
+        .voteC { background: #ff9800; color: white; } /* NEW */
 
         .action {
             background: #333;
@@ -90,9 +84,12 @@
 
         <input type="text" id="username" placeholder="Enter your name">
 
+        <!-- Voting Buttons -->
         <button class="voteA" onclick="vote('A')">Vote Candidate A</button>
         <button class="voteB" onclick="vote('B')">Vote Candidate B</button>
+        <button class="voteC" onclick="vote('C')">Vote Candidate C</button> <!-- NEW -->
 
+        <!-- Actions -->
         <button class="action" onclick="showResults()">Show Results</button>
         <button class="action" onclick="resetVotes()">Reset Votes</button>
 
